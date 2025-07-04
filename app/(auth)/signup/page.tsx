@@ -14,9 +14,10 @@ const signUp = () => {
 
 const [state, formAction, isPending] = useActionState(async (prevState: ActionResponse, formData: FormData) => {
     try {
-      const result = await signUpAction(formData)
+      const result = await signUpAction(formData);
 
       if (result.success) {
+        console.log(prevState);
         // toast.success('Signed in successfully')
         // router.push('/dashboard')
         // router.refresh()
@@ -69,6 +70,15 @@ const [state, formAction, isPending] = useActionState(async (prevState: ActionRe
           required
         />
 
+        <input
+          id="confirmPassword"
+          name="confirmPassword"
+          type="confirmPassword"
+          placeholder="Password"
+          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+          required
+        />    
+        
         <input
           type="text"
           id="tag"

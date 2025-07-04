@@ -1,6 +1,8 @@
 'use server'
 import { checkEmail, checkTag } from "@/lib/drizzle"
-import { z } from 'zod'
+import { z } from "zod";
+import {db} from "@/db/index";
+import {usersTable} from "@/db/schema";
 
 export type ActionResponse = {
     success: boolean
@@ -22,17 +24,18 @@ const signUpSchema = z
 export type signUpData = z.infer<typeof signUpSchema>
 
 const signUpAction = async (formData: FormData) => {
-    //validate Data
-    //check if user exists in db if not ask to use different email 
-    //generate a tag and check in db
-    //retrun the email id back in resposne
+    //1.validate Data
+    //2 check if user exists in db 
+    //2 if not ask to use different email 
+    //3 generate a tag and check in db
+    //4. retrun the email id back in resposne
 
-    
 
     const data = {
         name: formData.get('name') as string,
         email: formData.get('email') as string,
         password: formData.get('password') as string,
+        confirmPassword:formData.get('confirmPassword') as string
     }
 
     const validateData = signUpSchema.safeParse(data);
@@ -43,6 +46,16 @@ const signUpAction = async (formData: FormData) => {
             message: "Validation Error"
         }
     }
+
+    const db_insert = await db.insert(usersTable).values(data);
+
+    console.log(db_insert);
+    
+    return {
+        success:true,
+        message:"User Created"
+    }
+    
 }
 
 export default signUpAction;
