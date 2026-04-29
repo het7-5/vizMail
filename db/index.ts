@@ -5,7 +5,8 @@ import * as schema from './schema';
 
 const connection = await mysql.createConnection({
     host: "localhost",
-    user: process.env.DATABSE_USE,
+    user: process.env.DATABSE_US3E,
+    
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABSE,
 });
